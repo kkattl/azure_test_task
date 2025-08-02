@@ -33,12 +33,12 @@ resource "azurerm_network_interface" "nic_vm2" {
 
 resource "azurerm_network_interface_security_group_association" "vm1_assoc" {
   network_interface_id      = azurerm_network_interface.nic_vm1.id
-  network_security_group_id = azurerm_network_security_group.nsg_vm_public.id
+  network_security_group_id = azurerm_network_security_group.nsg_vm1c.id
 }
 
 resource "azurerm_network_interface_security_group_association" "vm2_assoc" {
   network_interface_id      = azurerm_network_interface.nic_vm2.id
-  network_security_group_id = azurerm_network_security_group.nsg_vm_private.id
+  network_security_group_id = azurerm_network_security_group.nsg_vm2.id
 } 
 
 resource "azurerm_linux_virtual_machine" "vm1" {
@@ -47,6 +47,11 @@ resource "azurerm_linux_virtual_machine" "vm1" {
   location              = azurerm_resource_group.rg.location
   size                  = var.vm_size
   network_interface_ids = [azurerm_network_interface.nic_vm1.id]
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
 
   admin_username                  = var.admin_username
   disable_password_authentication = true
@@ -70,6 +75,11 @@ resource "azurerm_linux_virtual_machine" "vm2" {
   location              = azurerm_resource_group.rg.location
   size                  = var.vm_size
   network_interface_ids = [azurerm_network_interface.nic_vm2.id]
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
 
   admin_username        = var.admin_username
   disable_password_authentication = true

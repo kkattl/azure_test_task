@@ -17,15 +17,15 @@ variable "prefix" {
 #network
 
 variable "vnet_address_space" {
-    type = list(string)
+    type = string
 }
 
 variable "private_subnet_address_space" {
-    type = list(string)
+    type = string
 }
 
 variable "public_subnet_address_space" {
-    type = list(string)
+    type = string
 }
 
 #vm
@@ -47,17 +47,35 @@ variable "vm_size" {
 }
 
 variable "image_publisher" {
-  type        = string
+    type = string
 }
 
 variable "image_offer" {
-  type        = string
+    type = string
 }
 
 variable "image_sku" {
-  type        = string
+    type = string
 }
 
 variable "image_version" {
-  type        = string
+    type = string
+}
+
+variable "vm_os_disk_caching" {
+    type = string
+}
+
+variable "vm_os_disk_storage_account_type" {
+    type = string
+}
+
+#sg
+
+variable "vm1_allowed_ports" {
+    type = list(number)
+}
+
+variable "vm2_allowed_ports" {
+    type = list(number)
 }
