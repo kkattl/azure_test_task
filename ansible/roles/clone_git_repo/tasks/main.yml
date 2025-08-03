@@ -1,0 +1,6 @@
+- name: clone eSchool repo
+  ansible.builtin.git:
+    repo: "https://github.com/yurkovskiy/eSchool"
+    dest: "/opt/eschool"
+    version: "master"   
+    update: yes 

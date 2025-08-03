@@ -1,0 +1,15 @@
+- name: Configure application host
+  hosts: vm1_main
+  become: yes
+  roles:
+    - openjdk8
+    - maven
+    - git
+    - clone_git_repo
+
+- name: Configure db host
+  hosts: vm2_db          
+  become: yes            
+  roles:
+    - mysql_install
+    - mysql_config
