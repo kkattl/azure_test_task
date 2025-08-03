@@ -17,15 +17,15 @@ variable "prefix" {
 #network
 
 variable "vnet_address_space" {
-    type = string
+    type = list(string)
 }
 
 variable "private_subnet_address_space" {
-    type = string
+    type = list(string)
 }
 
 variable "public_subnet_address_space" {
-    type = string
+    type = list(string)
 }
 
 #vm

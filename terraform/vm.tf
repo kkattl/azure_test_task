@@ -33,7 +33,7 @@ resource "azurerm_network_interface" "nic_vm2" {
 
 resource "azurerm_network_interface_security_group_association" "vm1_assoc" {
   network_interface_id      = azurerm_network_interface.nic_vm1.id
-  network_security_group_id = azurerm_network_security_group.nsg_vm1c.id
+  network_security_group_id = azurerm_network_security_group.nsg_vm1.id
 }
 
 resource "azurerm_network_interface_security_group_association" "vm2_assoc" {
