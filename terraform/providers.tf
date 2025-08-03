@@ -15,7 +15,7 @@ resource "azurerm_resource_group" "rg" {
 locals {
   sp = jsondecode(                              
          file(                                   
-           pathexpand("~/.azure/sp.json")        
+           pathexpand(var.sp_path)        
          )
        )
 }

@@ -2,8 +2,8 @@ resource "azurerm_public_ip" "vm1_public_ip" {
   name                = "${var.prefix}-vm1-pub_ip"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  allocation_method   = "Static"
-  sku                 = "Standard"
+  allocation_method   = var.ip_allocation_method
+  sku                 = var.ip_sku
 }
 
 resource "azurerm_network_interface" "nic_vm1" {
@@ -14,7 +14,7 @@ resource "azurerm_network_interface" "nic_vm1" {
   ip_configuration {
     name                          = "ipcfg"
     subnet_id                     = azurerm_subnet.public_subnet.id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = var.private_ip_address_allocation
     public_ip_address_id          = azurerm_public_ip.vm1_public_ip.id
   }
 }
@@ -27,7 +27,7 @@ resource "azurerm_network_interface" "nic_vm2" {
   ip_configuration {
     name                          = "ipcfg"
     subnet_id                     = azurerm_subnet.private_subnet.id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = var.private_ip_address_allocation
   }
 }
 
@@ -49,8 +49,8 @@ resource "azurerm_linux_virtual_machine" "vm1" {
   network_interface_ids = [azurerm_network_interface.nic_vm1.id]
 
   os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
+    caching              = var.vm_os_disk_caching
+    storage_account_type = var.vm_os_disk_storage_account_type
   }
 
   admin_username                  = var.admin_username
@@ -77,8 +77,8 @@ resource "azurerm_linux_virtual_machine" "vm2" {
   network_interface_ids = [azurerm_network_interface.nic_vm2.id]
 
   os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
+    caching              = var.vm_os_disk_caching
+    storage_account_type = var.vm_os_disk_storage_account_type
   }
 
   admin_username        = var.admin_username
