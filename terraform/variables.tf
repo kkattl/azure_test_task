@@ -30,6 +30,18 @@ variable "public_subnet_address_space" {
 
 #vm
 
+variable "ip_allocation_method"{
+    type = string
+}
+
+variable "ip_sku"{
+    type = string
+}
+
+variable "private_ip_address_allocation"{
+    type = string
+}
+
 variable "admin_username" {
     type = string
 }
@@ -47,17 +59,35 @@ variable "vm_size" {
 }
 
 variable "image_publisher" {
-  type        = string
+    type = string
 }
 
 variable "image_offer" {
-  type        = string
+    type = string
 }
 
 variable "image_sku" {
-  type        = string
+    type = string
 }
 
 variable "image_version" {
-  type        = string
+    type = string
+}
+
+variable "vm_os_disk_caching" {
+    type = string
+}
+
+variable "vm_os_disk_storage_account_type" {
+    type = string
+}
+
+#sg
+
+variable "vm1_allowed_ports" {
+    type = list(number)
+}
+
+variable "vm2_allowed_ports" {
+    type = list(number)
 }

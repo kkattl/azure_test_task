@@ -34,7 +34,7 @@ resource "azurerm_network_security_group" "nsg_vm2" {
       protocol                   = "Tcp"
       source_port_range          = "*"
       destination_port_range     = security_rule.value
-      source_address_prefix      = var.private_subnet_address_space    
+      source_address_prefix      = var.private_subnet_address_space[0]   
       destination_address_prefix = "*"
     }
   }
