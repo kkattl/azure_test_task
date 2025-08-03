@@ -1,0 +1,9 @@
+- name: apt update
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: install openjdk-8
+  ansible.builtin.apt:
+    name: openjdk-8-jdk
+    state: present

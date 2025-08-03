@@ -1,0 +1,34 @@
+- name: ensure mysql is running
+  ansible.builtin.service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: install pymysql driver
+  ansible.builtin.apt:
+    name: python3-pymysql
+    state: present
+  become: yes
+
+- name: create eschool_admin user
+  community.mysql.mysql_user:
+    name: eschool_admin
+    password: "{{ mysql_admin_pass }}"
+    host: "%"
+    priv: "*.*:USAGE"
+    state: present
+  no_log: true
+
+- name: create eschool database
+  community.mysql.mysql_db:
+    name: eschool
+    state: present
+
+- name: grant privileges to eschool_admin
+  community.mysql.mysql_user:
+    name: eschool_admin
+    password: "{{ mysql_admin_pass }}"
+    host: "%"
+    priv: "eschool.*:ALL"
+    state: present
+  no_log: true

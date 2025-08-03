@@ -15,3 +15,5 @@ override.tf.json
 *.auto.tfvars
 *.tfvars
 .DS_Store
+inventory.ini
+ansible/roles/mysql_config/vars/main.yml
