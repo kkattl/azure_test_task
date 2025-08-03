@@ -54,7 +54,11 @@ variable "ssh_vm2_public_key_path" {
     type = string
 }
 
-variable "vm_size" {
+variable "vm1_size" {
+    type = string
+}
+
+variable "vm2_size" {
     type = string
 }
 

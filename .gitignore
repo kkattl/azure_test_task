@@ -17,3 +17,4 @@ override.tf.json
 .DS_Store
 inventory.ini
 ansible/roles/mysql_config/vars/main.yml
+ansible/roles/deploy_eschool/vars/main.yml

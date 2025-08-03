@@ -1,6 +1,17 @@
+- name: Ensure /opt/eschool exists
+  ansible.builtin.file:
+    path: /opt/eschool
+    state: directory
+    owner: adminazure
+    group: adminazure
+    mode: '0755'
+  become: yes
+
 - name: clone eSchool repo
   ansible.builtin.git:
     repo: "https://github.com/yurkovskiy/eSchool"
     dest: "/opt/eschool"
     version: "master"   
-    update: yes 
+    update: yes
+  become: yes
+  become_user: adminazure 
