@@ -13,3 +13,9 @@
   roles:
     - mysql_install
     - mysql_config
+
+- name: Deploy app
+  hosts: vm1_main
+  become: yes
+  roles:
+    - deploy_eschool

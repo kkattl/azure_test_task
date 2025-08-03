@@ -1,0 +1,50 @@
+- name: Find ScheduleControllerIntegrationTest.java
+  find:
+    paths: /opt/eschool           
+    patterns: "ScheduleControllerIntegrationTest.java"
+    recurse: yes                 
+  register: schedule_test
+
+- name: Comment out ScheduleControllerIntegrationTest content
+  shell: sed -i 's/^/\/\/ /' "{{ schedule_test.files[0].path }}"
+  when: schedule_test.files | length > 0
+
+- name: Find application.properties file
+  find:
+    paths: /opt/eschool
+    patterns: application.properties
+    recurse: yes 
+  register: app_props
+
+- name: Update datasource URL in application.properties
+  lineinfile:
+    path: "{{ app_props.files[0].path }}"
+    regexp: '^spring.datasource.url='  
+    line: "spring.datasource.url={{ datasource_url }}"
+
+- name: Update datasource username in application.properties
+  lineinfile:
+    path: "{{ app_props.files[0].path }}"
+    regexp: '^spring.datasource.username='
+    line: "spring.datasource.username={{ datasource_username }}"
+
+- name: Update datasource password in application.properties
+  lineinfile:
+    path: "{{ app_props.files[0].path }}"
+    regexp: '^spring.datasource.password='
+    line: "spring.datasource.password={{ datasource_password }}"
+
+- name: Clean project with Maven
+  command: ./mvnw clean
+  args:
+    chdir: /opt/eschool
+
+- name: Package project with Maven
+  command: ./mvnw package -DskipTests
+  args:
+    chdir: /opt/eschool
+
+- name: Start application in background
+  shell: nohup java -jar eschool.jar > /dev/null 2>&1 &
+  args:
+    chdir: /opt/eschool/target

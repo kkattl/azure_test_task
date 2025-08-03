@@ -26,7 +26,7 @@
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock 
 
-- name: grant privileges to eschool_admin
+- name: privileges to eschool_admin
   community.mysql.mysql_user:
     name: eschool_admin
     password: "{{ mysql_admin_pass }}"
@@ -35,3 +35,23 @@
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock
   no_log: true
+
+- name: allow MySQL to listen on all interfaces
+  lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^bind-address'
+    line: 'bind-address = 0.0.0.0'
+  become: yes
+
+- name: allow MySQL to listen on all interfaces
+  lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^mysqlx-bind-address'
+    line: 'mysqlx-bind-address = 0.0.0.0'
+  become: yes
+
+- name: restart MySQL
+  service:
+    name: mysql
+    state: restarted
+  become: yes
