@@ -2,12 +2,12 @@
   ansible.builtin.apt:
     update_cache: yes
 
-- name: install MySQL server
+- name: Install MySQL server
   ansible.builtin.apt:
     name: mysql-server
     state: present
 
-- name: install pymysql driver
+- name: Install pymysql driver
   ansible.builtin.apt:
     name: python3-pymysql
     state: present
