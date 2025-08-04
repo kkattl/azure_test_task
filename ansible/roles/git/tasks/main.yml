@@ -2,7 +2,7 @@
   ansible.builtin.apt:
     update_cache: yes
 
-- name: install git
+- name: Install git
   ansible.builtin.apt:
     name: git
     state: present

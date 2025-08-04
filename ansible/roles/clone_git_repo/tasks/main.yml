@@ -7,7 +7,7 @@
     mode: '0755'
   become: yes
 
-- name: clone eSchool repo
+- name: Clone eSchool repo
   ansible.builtin.git:
     repo: "https://github.com/yurkovskiy/eSchool"
     dest: "/opt/eschool"

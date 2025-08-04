@@ -1,16 +1,16 @@
-- name: ensure mysql is running
+- name: Ensure mysql is running
   ansible.builtin.service:
     name: mysql
     state: started
     enabled: yes
 
-- name: install pymysql driver
+- name: Install pymysql driver
   ansible.builtin.apt:
     name: python3-pymysql
     state: present
   become: yes
 
-- name: create eschool_admin user
+- name: Create eschool_admin
   community.mysql.mysql_user:
     name: eschool_admin
     password: "{{ mysql_admin_pass }}"
@@ -20,13 +20,13 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock  
   no_log: true
 
-- name: create eschool database
+- name: Create eschool database
   community.mysql.mysql_db:
     name: eschool
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock 
 
-- name: privileges to eschool_admin
+- name: Privileges to eschool_admin
   community.mysql.mysql_user:
     name: eschool_admin
     password: "{{ mysql_admin_pass }}"
@@ -36,21 +36,21 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock
   no_log: true
 
-- name: allow MySQL to listen on all interfaces
+- name: Allow MySQL to listen on all interfaces
   lineinfile:
     path: /etc/mysql/mysql.conf.d/mysqld.cnf
     regexp: '^bind-address'
     line: 'bind-address = 0.0.0.0'
   become: yes
 
-- name: allow MySQL to listen on all interfaces
+- name: Allow MySQL to listen on all interfaces
   lineinfile:
     path: /etc/mysql/mysql.conf.d/mysqld.cnf
     regexp: '^mysqlx-bind-address'
     line: 'mysqlx-bind-address = 0.0.0.0'
   become: yes
 
-- name: restart MySQL
+- name: Restart MySQL
   service:
     name: mysql
     state: restarted
